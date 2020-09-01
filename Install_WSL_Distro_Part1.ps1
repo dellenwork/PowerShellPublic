@@ -60,6 +60,22 @@ Remove-Item -path $FileToGet
 ############ Set up for part 2 after reboot    #######################################
 
 # Set registry for RunOnce after reboot
+$BaseURL = "https://raw.githubusercontent.com/dellenwork/PowerShellPublic/master/"
+$ScriptName  = "Install_WSL_Distro_Part1.ps1"
+$ScriptURL = $BaseURL + $ScriptName
+
+$FileToSave = $PkgPath + $ScriptName
 
 
-#Restart-Computer  # WSL requires a reboot
+# Download WSL installer Scripts
+Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
+
+$ScriptName  = "Install_WSL_Distro_Part2.ps1"
+$ScriptURL = $BaseURL + $ScriptName
+Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
+
+# set run once registry for reboot
+Set-Location -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
+Set-ItemProperty -Path . -Name InstallWSL -Value $FileToSave   
+
+Restart-Computer  # WSL requires a reboot
