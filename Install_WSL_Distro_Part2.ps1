@@ -1,4 +1,5 @@
 ﻿############## Downloading and installing the app ###################
+ Start-Process powershell -Verb runAs
 $ErrorActionPreference = 'Continue'
 
 # Set variables
