@@ -55,7 +55,7 @@ $Job | Wait-Job -Timeout 310
 $Job | Stop-Job
 
 # Cleanup after the install and remove installer
-Remove-Item -path $FileToGet
+#Remove-Item -path $FileToGet
 
 ############ Set up for part 2 after reboot    #######################################
 
