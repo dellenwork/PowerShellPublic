@@ -12,6 +12,31 @@ $pkgpath = "c:\Users\Public\"
 #$username = "student"  # Hard coded username to create path and user in the distro
 $username = $env:UserName
 
+############## Initializing the wsl distro app without requiring user input ###################
+
+# First define path to the installed distro
+$Path1 = "c:/Users/"
+$Path2 = "/AppData/Local/Microsoft/WindowsApps/" + $Distro + ".exe"
+#$hdd_name=(Get-WmiObject Win32_OperatingSystem).SystemDrive
+[String] $distro_path = $Path1 + $username + $Path2
+
+# Install and set default user initially to root
+$Option1 = " install --root"
+$InstallCmd = $Distro + $Option1
+invoke-expression -Command $InstallCmd
+
+#Set up a job so I can timeout the installer after a set period of time becuase the job will hang 
+#waiting for input that is not provided.
+#$Job = Start-Job -ScriptBlock {
+#        Invoke-Command -ComputerName localhost -ScriptBlock {
+#        invoke-expression -Command $InstallCmd 
+#        } 
+#}
+#$Job | Wait-Job -Timeout 310
+#$Job | Stop-Job
+
+# Cleanup after the install and remove installer
+#Remove-Item -path $FileToGet
 
 ############ Configure installed distro    #######################################
 
@@ -28,15 +53,6 @@ $NewPassword =  ConvertTo-SecureString -String $NPassword -AsPlainText -Force
 $MyCmd4 = "$Distro run useradd -G adm -d /home/$username -s /bin/bash -p $NewPassword $username"
 Invoke-Expression -Command $MyCmd4
 write-host "installed user $?"
-
-# set password
-
-#$StrUser = $username + ":" + $Default_Password
-#$MyCmd2 = $Distro + " run echo ""$StrUser"" | /usr/sbin/chpasswd"
-#Invoke-Expression -Command $MyCmd2
-#write-host "installed password $?"
-#$SetPW = "$Distro run echo "D:password" | chpasswd"
-#Invoke-Expression $SetPW
 
 # Add user to distro Sudoers
 $MyCmd5 = " $Distro run usermod -aG sudo $username "
@@ -68,4 +84,4 @@ $Cmd = "$Distro run apt-get install python3"
 # Change default user in Distro
 Invoke-Expression -Command "$Distro config --default-user $username"
 
-"Done"
+Write-Output "Done"
