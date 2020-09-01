@@ -18,7 +18,7 @@ $username = $env:UserName
 #$env:Path = $env:Path + ';c:\windows\system32'
 
 # Set as the default distro
-.\wslconfig.exe /setdefault $Distro
+wslconfig /setdefault $Distro
 write-host "installed default $?"
 
 # Set WSL to V2 for better performance
@@ -63,11 +63,12 @@ write-host "installed updates $?"
 $cmd = "$Distro run  sudo apt-get -y Upgrade"
 Invoke-expression $Cmd
 if ($? -eq 0) {write-host "installed upgrades" }
-            #$Distro run sudo apt-get dist-upgrade
-            #$Distro run  sudo apt-get autoremove
-            #$Distro run  sudo apt-get install git-all
-            #$Distro -c  sudo apt-get install software-properties-common python-software-properties
-            # $Distro -c  sudo apt-get install python3
+
+#$Distro run sudo apt-get dist-upgrade
+#$Distro run  sudo apt-get autoremove
+#$Distro run  sudo apt-get install git-all
+#$Distro -c  sudo apt-get install software-properties-common python-software-properties
+# $Distro -c  sudo apt-get install python3
 
 
 # Change default user in Distro
