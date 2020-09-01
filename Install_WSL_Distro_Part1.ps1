@@ -2,14 +2,13 @@
 $ErrorActionPreference = 'Continue'
 
 # Enable wsl subsystems for linux (Must run in admin mode)
-Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+Enable-WindowsOptionalFeature -FeatureName VirtualMachinePlatform -All -NoRestart
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -All -NoRestart
 
 # Set Tls12 protocol to be able to download the wsl application
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Set variables
-$Default_Password = "password"
 $DistroName = "wsl-debian-gnulinux"
 #$DistroName = "wsl-ubuntu-1804"
 $Distro = $DistroName.split("-")[1] #Split the name on dashes to use the 2nd element for the .exe
