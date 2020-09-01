@@ -13,9 +13,6 @@ $username = $env:UserName
 
 
 ############ Configure installed distro    #######################################
-           
-# set path
-#$env:Path = $env:Path + ';c:\windows\system32'
 
 # Set as the default distro
 wslconfig /setdefault $Distro
@@ -25,16 +22,18 @@ write-host "installed default $?"
 wsl --set-default-version 2
 write-host "installed version 2 $?"
 
-# Create user  in Distro       -p $(echo $Default_password | openssl passwd -1 -stdin)
-$MyCmd4 = "$Distro run useradd -g adm -d /home/$username -s /bin/bash  $username"
+# Create user  in Distro 
+$NewPassword =  ConvertTo-SecureString -String $DefaultPassword -AsPlainText -Force
+$MyCmd4 = "$Distro run useradd -G adm -d /home/$username -s /bin/bash -p $NewPassword $username"
 Invoke-Expression -Command $MyCmd4
 write-host "installed user $?"
 
 # set password
-$StrUser = $username + ":" + $Default_Password
-$MyCmd2 = $Distro + " run echo ""$StrUser"" | /usr/sbin/chpasswd"
-Invoke-Expression -Command $MyCmd2
-write-host "installed password $?"
+
+#$StrUser = $username + ":" + $Default_Password
+#$MyCmd2 = $Distro + " run echo ""$StrUser"" | /usr/sbin/chpasswd"
+#Invoke-Expression -Command $MyCmd2
+#write-host "installed password $?"
 #$SetPW = "$Distro run echo "D:password" | chpasswd"
 #Invoke-Expression $SetPW
 
@@ -44,31 +43,25 @@ Invoke-Expression -Command $MyCmd5
 write-host "add to sudoers $?"
 
 
-
-# Create user account, add to sudoer group for distro and set password
-#$MyCmd = $Distro + " run adduser -m -s /bin/bash  -G sudo $username"
-#Invoke-Expression -Command $MyCmd
-
-
-
-#$Distro run $(echo $Default_password | passwd --stdin $username)
-
-
-
 # Add code to refresh $Distro repo and get python packages
-$cmd = "$Distro run apt-get -y update "
+$cmd = "$Distro run apt-get update "
 Invoke-expression $Cmd\
 write-host "installed updates $?"
 
-$cmd = "$Distro run  sudo apt-get -y Upgrade"
+$cmd = "$Distro run  apt-get upgrade -y"
 Invoke-expression $Cmd
 if ($? -eq 0) {write-host "installed upgrades" }
 
-#$Distro run sudo apt-get dist-upgrade
-#$Distro run  sudo apt-get autoremove
-#$Distro run  sudo apt-get install git-all
-#$Distro -c  sudo apt-get install software-properties-common python-software-properties
-# $Distro -c  sudo apt-get install python3
+$Cmd = "$Distro run apt-get dist-upgrade"
+Invoke-expression $Cmd
+$Cmd = "$Distro run  apt-get autoremove"
+Invoke-expression $Cmd
+$Cmd = "$Distro run apt-get install git-all -y"
+Invoke-expression $Cmd
+$Cmd = "$Distro run apt-get install software-properties-common python-software-properties -y"
+Invoke-expression $Cmd
+$Cmd = "$Distro run apt-get install python3"
+Invoke-expression $Cmd
 
 
 # Change default user in Distro
