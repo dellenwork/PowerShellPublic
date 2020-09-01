@@ -45,4 +45,4 @@ $ItemPropertyValue = "$FileToSave -verb RunAs"
 Set-Location -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
 Set-ItemProperty -Path . -Name InstallWSL -Value $ItemPropertyValue
 
-#Restart-Computer  # WSL requires a reboot
+Restart-Computer  # WSL requires a reboot
