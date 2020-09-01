@@ -33,47 +33,11 @@ $mycmd = "Add-AppxPackage " + $FileToGet
 invoke-expression -Command $mycmd
 Write-Output "Installed $Distro : $?"
 
-############## Initializing the wsl distro app without requiring user input ###################
-
-# First define path to the installed distro
-$Path1 = "c:/Users/"
-$Path2 = "/AppData/Local/Microsoft/WindowsApps/" + $Distro + ".exe"
-#$hdd_name=(Get-WmiObject Win32_OperatingSystem).SystemDrive
-[String] $distro_path = $Path1 + $username + $Path2
-
-# Install and set default user initially to root
-$Option1 = " install --root"
-$InstallCmd = $Distro + $Option1
-
-#Set up a job so I can timeout the installer after a set period of time becuase the job will hang 
-#waiting for input that is not provided.
-$Job = Start-Job -ScriptBlock {
-        Invoke-Command -ComputerName localhost -ScriptBlock {
-        invoke-expression -Command $InstallCmd 
-        } 
-}
-$Job | Wait-Job -Timeout 310
-$Job | Stop-Job
-
-# Cleanup after the install and remove installer
-#Remove-Item -path $FileToGet
 
 ############ Set up for part 2 after reboot    #######################################
 
 # Set registry for RunOnce after reboot
-$BaseURL = "https://raw.githubusercontent.com/dellenwork/PowerShellPublic/master/"
 $ScriptName  = "Install_WSL_Distro_Part2.ps1"
-$ScriptURL = $BaseURL + $ScriptName
-
-$FileToSave = $PkgPath + $ScriptName
-
-
-# Download WSL installer Scripts
-# Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
-
-# $ScriptName  = "Install_WSL_Distro_Part2.ps1"
-# $ScriptURL = $BaseURL + $ScriptName
-# Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
 
 # set run once registry for reboot
 $RunValue = "powershell -file $FileToSave"
