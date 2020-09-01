@@ -1,5 +1,5 @@
 ﻿############## Downloading and installing the app ###################
- Set-ExecutionPolicy unrestricted
+ Set-ExecutionPolicy Bypass -scope Process -Force
  Start-Process powershell -Verb runAs
 $ErrorActionPreference = 'Continue'
 
