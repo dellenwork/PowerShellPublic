@@ -77,7 +77,8 @@ $FileToSave = $PkgPath + $ScriptName
 
 # set run once registry for reboot
 $RunValue = "powershell -file $FileToSave"
+$ItemPropertyValue = "$FileToSave -verb RunAs"
 Set-Location -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
-Set-ItemProperty -Path . -Name InstallWSL -Value $FileToSave -verb RunAs
+Set-ItemProperty -Path . -Name InstallWSL -Value $ItemPropertyValue
 
 #Restart-Computer  # WSL requires a reboot
