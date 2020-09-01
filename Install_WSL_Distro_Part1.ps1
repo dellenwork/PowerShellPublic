@@ -35,10 +35,10 @@ Write-Output "Installed $Distro : $?"
 ############## Initializing the wsl distro app without requiring user input ###################
 
 # First define path to the installed distro
-$Path1 = "/Users/"
+$Path1 = "c:/Users/"
 $Path2 = "/AppData/Local/Microsoft/WindowsApps/" + $Distro + ".exe"
-$hdd_name=(Get-WmiObject Win32_OperatingSystem).SystemDrive
-[String] $distro_path = $hdd_name + $Path1 + $username + $Path2
+#$hdd_name=(Get-WmiObject Win32_OperatingSystem).SystemDrive
+[String] $distro_path = $Path1 + $username + $Path2
 
 # Install and set default user initially to root
 $Option1 = " install --root"
