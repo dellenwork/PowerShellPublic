@@ -2,6 +2,16 @@
  # Start-Process powershell -Verb runAs
 $ErrorActionPreference = 'Continue'
 
+#http://jongurgul.com/blog/get-stringhash-get-filehash/ 
+Function Get-StringHash([String] $String,$HashName = "MD5") 
+{ 
+$StringBuilder = New-Object System.Text.StringBuilder 
+[System.Security.Cryptography.HashAlgorithm]::Create($HashName).ComputeHash([System.Text.Encoding]::UTF8.GetBytes($String))|%{ 
+[Void]$StringBuilder.Append($_.ToString("x2")) 
+} 
+$StringBuilder.ToString() 
+}
+
 # Set variables
 $NPassword = "password"
 $DistroName = "wsl-debian-gnulinux"
@@ -17,7 +27,7 @@ $username = $env:UserName
 # First define path to the installed distro
 $Path1 = "c:/Users/"
 $Path2 = "/AppData/Local/Microsoft/WindowsApps/" + $Distro + ".exe"
-#$hdd_name=(Get-WmiObject Win32_OperatingSystem).SystemDrive
+
 [String] $distro_path = $Path1 + $username + $Path2
 
 # Install and set default user initially to root
@@ -49,7 +59,7 @@ wsl --set-default-version 2
 write-host "installed version 2 $?"
 
 # Create user  in Distro 
-$NewPassword =  ConvertTo-SecureString -String $NPassword -AsPlainText -Force
+$NewPassword = Get-StringHash($NPassword)
 $MyCmd4 = "$Distro run useradd -G adm -d /home/$username -s /bin/bash -p $NewPassword $username"
 Invoke-Expression -Command $MyCmd4
 write-host "installed user $?"
@@ -62,7 +72,7 @@ write-host "add to sudoers $?"
 
 # Add code to refresh $Distro repo and get python packages
 $cmd = "$Distro run apt-get update "
-Invoke-expression $Cmd\
+Invoke-expression $Cmd
 write-host "installed updates $?"
 
 $cmd = "$Distro run  apt-get upgrade -y"
