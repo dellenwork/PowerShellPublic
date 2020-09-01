@@ -2,7 +2,7 @@
 $ErrorActionPreference = 'Continue'
 
 # Set variables
-$DefaultPassword = "password"
+$NPassword = "password"
 $DistroName = "wsl-debian-gnulinux"
 #$DistroName = "wsl-ubuntu-1804"
 $Distro = $DistroName.split("-")[1] #Split the name on dashes to use the 2nd element for the .exe
@@ -23,7 +23,7 @@ wsl --set-default-version 2
 write-host "installed version 2 $?"
 
 # Create user  in Distro 
-$NewPassword =  ConvertTo-SecureString -String $DefaultPassword -AsPlainText -Force
+$NewPassword =  ConvertTo-SecureString -String $NPassword -AsPlainText -Force
 $MyCmd4 = "$Distro run useradd -G adm -d /home/$username -s /bin/bash -p $NewPassword $username"
 Invoke-Expression -Command $MyCmd4
 write-host "installed user $?"
