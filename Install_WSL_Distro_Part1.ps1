@@ -74,7 +74,7 @@ $ScriptURL = $BaseURL + $ScriptName
 Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
 
 # set run once registry for reboot
-$RunValue = "c:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe -noexit -command $FileToSave"
+$RunValue = "$RunValue = "powershell -file $FileToSave"
 Set-Location -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
 Set-ItemProperty -Path . -Name InstallWSL -Value $FileToSave   
 
