@@ -2,8 +2,8 @@
 $ErrorActionPreference = 'Continue'
 
 # Enable wsl subsystems for linux (Must run in admin mode)
-#Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
-#Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 
 # Set Tls12 protocol to be able to download the wsl application
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -75,6 +75,7 @@ $ScriptURL = $BaseURL + $ScriptName
 Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
 
 # set run once registry for reboot
+$RunValue = "c:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe -noexit -command $FileToSave"
 Set-Location -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
 Set-ItemProperty -Path . -Name InstallWSL -Value $FileToSave   
 
