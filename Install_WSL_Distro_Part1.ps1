@@ -1,4 +1,5 @@
 ﻿############## Downloading and installing the app ###################
+ Set-ExecutionPolicy unrestricted
  Start-Process powershell -Verb runAs
 $ErrorActionPreference = 'Continue'
 
