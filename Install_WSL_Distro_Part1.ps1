@@ -69,11 +69,11 @@ $FileToSave = $PkgPath + $ScriptName
 
 
 # Download WSL installer Scripts
-Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
+# Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
 
 $ScriptName  = "Install_WSL_Distro_Part2.ps1"
 $ScriptURL = $BaseURL + $ScriptName
-Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
+# Invoke-WebRequest -Uri $ScriptURL -OutFile $FileToSave
 
 # set run once registry for reboot
 $RunValue = "powershell -file $FileToSave"
