@@ -38,6 +38,7 @@ Write-Output "Installed $Distro : $?"
 
 # Set registry for RunOnce after reboot
 $ScriptName  = "Install_WSL_Distro_Part2.ps1"
+$FileToSave = $PkgPath + $ScriptName
 
 # set run once registry for reboot
 $RunValue = "powershell -file $FileToSave"
