@@ -2,7 +2,7 @@
 $ErrorActionPreference = 'Continue'
 
 # Set variables
-$Default_Password = "password"
+$DefaultPassword = "password"
 $DistroName = "wsl-debian-gnulinux"
 #$DistroName = "wsl-ubuntu-1804"
 $Distro = $DistroName.split("-")[1] #Split the name on dashes to use the 2nd element for the .exe
