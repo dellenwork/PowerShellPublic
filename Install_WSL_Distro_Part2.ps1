@@ -85,9 +85,9 @@ $Cmd = "$Distro run  apt-get autoremove"
 Invoke-expression $Cmd
 $Cmd = "$Distro run apt-get install git-all -y"
 Invoke-expression $Cmd
-$Cmd = "$Distro run apt-get install software-properties-common python-software-properties -y"
+$Cmd = "$Distro run apt-get install software-properties-common  -y"
 Invoke-expression $Cmd
-$Cmd = "$Distro run apt-get install python3"
+$Cmd = "$Distro run apt-get install python3 -y"
 Invoke-expression $Cmd
 
 
