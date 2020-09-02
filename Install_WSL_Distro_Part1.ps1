@@ -41,7 +41,7 @@ $ScriptName  = "Install_WSL_Distro_Part2.ps1"
 $FileToSave = $PkgPath + $ScriptName
 
 # set run once registry for reboot
-$ItemPropertyValue = "$FileToSave -verb RunAs"
+$ItemPropertyValue = "powershell -file $FileToSave -Verb RunAs"
 Set-Location -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
 Set-ItemProperty -Path . -Name InstallWSL -Value $ItemPropertyValue
 
