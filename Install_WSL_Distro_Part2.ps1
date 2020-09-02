@@ -76,22 +76,22 @@ Invoke-expression $Cmd
 write-host "installed updates $?"
 
 $cmd = "$Distro run  apt-get upgrade -y"
-#Invoke-expression $Cmd
+Invoke-expression $Cmd
 if ($? -eq 0) {write-host "installed upgrades" }
 
 $Cmd = "$Distro run apt-get dist-upgrade"
-#Invoke-expression $Cmd
+Invoke-expression $Cmd
 $Cmd = "$Distro run  apt-get autoremove"
-#Invoke-expression $Cmd
+Invoke-expression $Cmd
 $Cmd = "$Distro run apt-get install git-all -y"
-#Invoke-expression $Cmd
+Invoke-expression $Cmd
 $Cmd = "$Distro run apt-get install software-properties-common python-software-properties -y"
-#Invoke-expression $Cmd
+Invoke-expression $Cmd
 $Cmd = "$Distro run apt-get install python3"
-#Invoke-expression $Cmd
+Invoke-expression $Cmd
 
 
 # Change default user in Distro
-Invoke-Expression -Command "$Distro config --default-user $username"
+#Invoke-Expression -Command "$Distro config --default-user $username"
 
 Write-Output "Done"
