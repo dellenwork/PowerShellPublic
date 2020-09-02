@@ -90,8 +90,10 @@ Invoke-expression $Cmd
 $Cmd = "$Distro run apt-get install python3 -y"
 Invoke-expression $Cmd
 
+#change password for user in distro
+$Cmd = "$Distro run 'echo "student:password" | chpasswd' "
 
 # Change default user in Distro
-#Invoke-Expression -Command "$Distro config --default-user $username"
+Invoke-Expression -Command "$Distro config --default-user $username"
 
 Write-Output "Done"
